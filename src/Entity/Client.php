@@ -1,30 +1,34 @@
-<?php 
- include ".\src\Database\DatabaseConnection.php";
-?>
 <?php
+
 class Client
 {
-    private int $id;
-    private string $name;
-    private string $email;
-    public function __construct(int $id, string $name, string $email)
+    private $id;
+    private $name;
+    private $email;
+    
+    public function __construct($name, $email)
     {
-        $this->id = $id;
         $this->name = $name;
         $this->email = $email;
     }
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    public function getName(): string
+   
+    public function getName()
     {
         return $this->name;
     }
 
-    public function getEmail(): string
+    public function getEmail()
     {
         return $this->email;
+    }
+    
+    public function getId()
+    {
+        return $this->id;
+    }
+    
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 }
