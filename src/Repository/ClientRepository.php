@@ -11,7 +11,6 @@ class ClientRepository
         $stmt = $this->pdo->prepare("INSERT INTO clients (name, email) VALUES (?, ?)");
         $stmt->execute([$name, $email]);
     }
-    
     public function getAllClients()
     {
         $stmt = $this->pdo->prepare("SELECT * FROM clients");

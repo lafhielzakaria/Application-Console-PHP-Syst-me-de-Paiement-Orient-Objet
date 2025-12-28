@@ -9,9 +9,10 @@ class PaiementRepository
         $this->pdo = new Database()->getConnection();
     }
 
-    public function processPayment($commandeId, $paymentType)
+    public function processPayment($orderId, $paymentType, $amount)
     {
-        $stmt = $this->pdo->prepare("INSERT INTO paiements (commande_id, type_paiement) VALUES (?, ?)");
-        $stmt->execute([$commandeId, $paymentType]);
+        $stmt = $this->pdo->prepare("INSERT INTO payments (orderId, paymentType, amount, status) VALUES (?, ?, ?, 'pending')");
+        $stmt->execute([$orderId, $paymentType, $amount]);
+        return $this->pdo->lastInsertId();
     }
 }

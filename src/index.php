@@ -8,13 +8,12 @@ function PassInputs()
 {
     $email = readline('Enter your email: ');
     $name = readline('Enter your name: ');
-    $client = new Client($email, $name);
-    $clientRepo = new ClientRepository();
+    $clientRepo = new ClientRepository;
     $clientRepo->createClient($name, $email);
 }
 function DisplayAllClients()
 {
-    $clientRepo = new ClientRepository();
+    $clientRepo = new ClientRepository;
     $clients = $clientRepo->getAllClients();
     foreach ($clients as $client) {
         echo "ID: {$client['id']}\n____________\n Name: {$client['name']}\n____________\n Email: {$client['email']}\n____________\n";
@@ -25,25 +24,28 @@ function PassCommandInputs()
     DisplayAllClients();
     $clientId = readline('Enter client ID: ');
     $montant = readline('Enter amount: ');
-    $commandeRepo = new CommandeRepository();
-    $commandeRepo->createCommande($clientId, $montant);
-    echo "Command created successfully!\n";
+    $commandeRepo = new CommandeRepository;
+    if ($commandeRepo->createCommande($clientId, $montant)) {
+        echo "Command created successfully!\n";
+    }
 }
 
 function buyCommand()
 {
+    DisplayAllCommands();
     $commandeId = readline('Enter command ID: ');
+    $amount = readline('Enter amount: ');
     $paymentType = readline('Enter payment type (1-Card, 2-Paypal, 3-Transfer): ');
-    $paiementRepo = new PaiementRepository();
-    $paiementRepo->processPayment($commandeId, $paymentType);
+    $paiementRepo = new PaiementRepository;
+    $paiementRepo->processPayment($commandeId, $paymentType, $amount);
     echo "Payment processed!\n";
 }
 function DisplayAllCommands()
 {
-    $commandeRepo = new CommandeRepository();
+    $commandeRepo = new CommandeRepository;
     $commandes = $commandeRepo->getAllCommandes();
     foreach ($commandes as $commande) {
-        echo "ID: {$commande['id']}, Client ID: {$commande['client_id']}, Amount: {$commande['montant']}\n";
+        echo "ID: {$commande['id']}, Client ID: {$commande['clientId']}, Amount: {$commande['amount']}\n";
     }
 }
 echo "==============================
@@ -84,6 +86,4 @@ function InitApp($choice)
             echo "wrong choice !";
     }
 }
-
-
 ?>
